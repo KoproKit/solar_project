@@ -23,6 +23,10 @@ def read_space_objects_data_from_file(input_filename):
                 star = Star()
                 parse_star_parameters(line, star)
                 objects.append(star)
+            elif object_type == "planet":  # FIXME: do the same for planet
+                planet = Planet()
+                parse_planet_parameters(line, planet)
+                objects.append(planet)
             else:
                 print("Unknown space object")
 
@@ -43,8 +47,16 @@ def parse_star_parameters(line, star):
     **line** — строка с описание звезды.
     **star** — объект звезды.
     """
+    star_parameters = line.split()
+    star.type = 'Star'
+    star.R = int(star_parameters[1])
+    star.color = star_parameters[2]
+    star.m = int(star_parameters[3])
+    star.x = float(star_parameters[4])
+    star.y = float(star_parameters[5])
+    star.Vx = float(star_parameters[6])
+    star.Vy = float(star_parameters[7])
 
-    pass  # FIXME: not done yet
 
 def parse_planet_parameters(line, planet):
     """Считывает данные о планете из строки.
@@ -61,7 +73,15 @@ def parse_planet_parameters(line, planet):
     **line** — строка с описание планеты.
     **planet** — объект планеты.
     """
-    pass  # FIXME: not done yet...
+    planet_parameters = line.split()
+    planet.type = 'Planet'
+    planet.R = int(planet_parameters[1])
+    planet.color = planet_parameters[2]
+    planet.m = int(planet_parameters[3])
+    planet.x = float(planet_parameters[4])
+    planet.y = float(planet_parameters[5])
+    planet.Vx = float(planet_parameters[6])
+    planet.Vy = float(planet_parameters[7])
 
 
 def write_space_objects_data_to_file(output_filename, space_objects):
@@ -77,8 +97,8 @@ def write_space_objects_data_to_file(output_filename, space_objects):
     """
     with open(output_filename, 'w') as out_file:
         for obj in space_objects:
-            print(out_file, "%s %d %s %f" % ('1', 2, '3', 4.5))
-            # FIXME: should store real values
+            print(out_file, "%s %d %s %f" % (obj.type, obj.R, obj.color, obj.x, obj.y, obj.Vx, obj.Vy))
+
 
 # FIXME: хорошо бы ещё сделать функцию, сохранающую статистику в заданный файл...
 
